@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/alvinliu588950/simple-reddit-clone/topics"
 )
 
 func main() {
