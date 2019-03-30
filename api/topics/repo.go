@@ -36,3 +36,12 @@ func (tr *TopicRepo) Upvote(id int) {
 		}
 	}
 }
+
+func (tr *TopicRepo) Downvote(id int) {
+	for i:=0; i < len(tr.Topics); i++ {
+		if tr.Topics[i].Id == id {
+			tr.Topics[i].Votes -= 1
+		}
+	}
+}
+
