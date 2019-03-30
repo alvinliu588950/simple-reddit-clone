@@ -16,6 +16,15 @@ func NewRepo() *TopicRepo {
 	}
 }
 
-func (tr *TopicRepo) GetAll() []Topic {
-	return tr.Topics
+func (tr *TopicRepo) Add(t Topic) {
+	tr.Topics = append(tr.Topics, t)
+}
+
+func (tr *TopicRepo) Find(id int) (*Topic) {
+	for i:=0; i < len(tr.Topics); i++ {
+		if tr.Topics[i].Id == id {
+			return &tr.Topics[i]
+		}
+	}
+	return nil
 }

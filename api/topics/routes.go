@@ -7,4 +7,5 @@ import (
 func Routes(r *gin.RouterGroup, tr *TopicRepo) {
 	handler := TopicHandler{}
 	r.GET("/topics", handler.List(tr))
+	r.POST("/topics/add", handler.Add(tr))
 }

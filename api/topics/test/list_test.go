@@ -14,8 +14,8 @@ type ListResponse struct {
 }
 
 func TestListRoute(t *testing.T) {
-	r, topicsRepo := setup()
-	// made request
+	r, topicRepo := setup()
+	// make request
 	req, _ := http.NewRequest("GET", "/api/v1/topics", nil)
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)
@@ -27,5 +27,5 @@ func TestListRoute(t *testing.T) {
 	// assertions on the correctness of the response.
 	assert.Nil(t, err)
 	assert.Equal(t, 200, w.Code)
-	assert.Equal(t, topicsRepo.GetAll(), response.Topics)
+	assert.Equal(t, topicRepo.Topics, response.Topics)
 }
