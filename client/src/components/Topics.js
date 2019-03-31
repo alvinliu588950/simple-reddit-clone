@@ -132,6 +132,7 @@ class Topics extends Component {
             }
         })
         .then((resp) => {
+            // after user vote, the page should display the updated list of topics
             self.fetchTopics()
         })
         .catch((err) => {
@@ -148,6 +149,7 @@ class Topics extends Component {
             }
         })
         .then((resp) => {
+            // after user vote, the page should display shows the updated list of topics
             self.fetchTopics()
         })
         .catch((err) => {
