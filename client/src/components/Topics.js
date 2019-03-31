@@ -69,16 +69,19 @@ class Topics extends Component {
                         {
                             this.state.topics.map((item, index) => (
                                 <div className="card" key={index}>
-                                    <div className="vote">
-                                        <button  onClick={() => this.upvote(item.Id)}>
-                                            <i className="fas fa-arrow-up"></i>
-                                        </button>
-                                        <p>{item.Votes}</p>
-                                        <button onClick={() => this.downvote(item.Id)}>
-                                            <i className="fas fa-arrow-down" ></i>
-                                        </button>                                    
-                                    </div>
+                                    <header className="card-header">
+                                        <p className="card-header-title">Topic number: {item.Id} </p>
+                                    </header>
                                     <div className="card-content">
+                                        <div className="vote">
+                                            <button className="button is-light"  onClick={() => this.upvote(item.Id)}>
+                                                <i className="fas fa-arrow-up"></i>
+                                            </button>
+                                            <p>{item.Votes}</p>
+                                            <button className="button is-light" onClick={() => this.downvote(item.Id)}>
+                                                <i className="fas fa-arrow-down" ></i>
+                                            </button>                                    
+                                        </div>
                                         <div className="content">
                                             <p>{item.Content}</p>
                                         </div>
@@ -95,13 +98,12 @@ class Topics extends Component {
         var self = this;
         axios.get('/api/v1/topics')
             .then((resp) => {
-                console.log(resp)
                 self.setState({ 
                     topics: resp.data.topics
                 });
             })
             .catch((err) => {
-                console.log(err);
+                alert('Something went wrong.Please check your network or contact us.')
             })
     }
     addTopics() {
