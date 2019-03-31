@@ -8,6 +8,7 @@ class Topics extends Component {
         this.state = {
             topics: [],
             content: "",
+            isLoading: false
         }
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -66,28 +67,34 @@ class Topics extends Component {
                 </div>
                 <div className="columns">
                     <div className="column is-6 is-offset-3">
-                        {
-                            this.state.topics.map((item, index) => (
-                                <div className="card" key={index}>
-                                    <header className="card-header">
-                                        <p className="card-header-title">Topic number: {item.Id} </p>
-                                    </header>
-                                    <div className="card-content">
-                                        <div className="vote">
-                                            <button className="button is-light"  onClick={() => this.upvote(item.Id)}>
-                                                <i className="fas fa-arrow-up"></i>
-                                            </button>
-                                            <p>{item.Votes}</p>
-                                            <button className="button is-light" onClick={() => this.downvote(item.Id)}>
-                                                <i className="fas fa-arrow-down" ></i>
-                                            </button>                                    
-                                        </div>
-                                        <div className="content">
-                                            <p>{item.Content}</p>
+                        { this.state.isLoading ? 
+                            (
+                                <p className="has-text-centered">
+                                    <i className="fas fa-circle-notch fa-spin loading"></i>
+                                </p>):
+                            (
+                                this.state.topics.map((item, index) => (
+                                    <div className="card" key={index}>
+                                        <header className="card-header">
+                                            <p className="card-header-title">Topic number: {item.Id} </p>
+                                        </header>
+                                        <div className="card-content">
+                                            <div className="vote">
+                                                <button className="button is-light"  onClick={() => this.upvote(item.Id)}>
+                                                    <i className="fas fa-arrow-up"></i>
+                                                </button>
+                                                <p>{item.Votes}</p>
+                                                <button className="button is-light" onClick={() => this.downvote(item.Id)}>
+                                                    <i className="fas fa-arrow-down" ></i>
+                                                </button>                                    
+                                            </div>
+                                            <div className="content">
+                                                <p>{item.Content}</p>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            ))
+                                ))
+                            )
                         }
                     </div>
                 </div>
@@ -95,11 +102,17 @@ class Topics extends Component {
         );
     }
     fetchTopics() {
-        var self = this;
+        let self = this;
+        self.setState({ 
+            isLoading: true
+        });
         axios.get('/api/v1/topics')
             .then((resp) => {
                 self.setState({ 
                     topics: resp.data.topics
+                });
+                self.setState({ 
+                    isLoading: false
                 });
             })
             .catch((err) => {
@@ -107,7 +120,10 @@ class Topics extends Component {
             })
     }
     addTopics() {
-        var self = this;
+        let self = this;
+        self.setState({ 
+            isLoading: true
+        });        
         axios({
             method: 'post',
             url: '/api/v1/topics/add',
@@ -123,7 +139,10 @@ class Topics extends Component {
         })      
     }
     upvote(id) {
-        var self = this;
+        let self = this;
+        self.setState({ 
+            isLoading: true
+        });        
         axios({
             method: 'patch',
             url: '/api/v1/topics/upvote',
@@ -140,7 +159,10 @@ class Topics extends Component {
         })     
     }
     downvote(id) {
-        var self = this;
+        let self = this;
+        self.setState({ 
+            isLoading: true
+        });
         axios({
             method: 'patch',
             url: '/api/v1/topics/downvote',
