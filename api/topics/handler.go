@@ -22,8 +22,15 @@ type DownvoteRequest struct {
 
 func (th *TopicHandler) List(tr *TopicRepo) gin.HandlerFunc {
 	return func (c *gin.Context) {
+		topics, _ := tr.GetSorted()
+		if len(tr.Topics) > 20 {
+			c.JSON(http.StatusOK, gin.H {
+				"topics": topics[:20],
+			})	
+			return		
+		}
 		c.JSON(http.StatusOK, gin.H {
-			"topics": tr.Topics,
+			"topics": topics,
 		})
 	}
 }

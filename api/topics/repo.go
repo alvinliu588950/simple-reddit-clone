@@ -2,6 +2,7 @@ package topics
 
 import (
 	"errors"
+	"sort"
 )
 
 type Topic struct {
@@ -52,4 +53,13 @@ func (tr *TopicRepo) Downvote(id int) (error) {
 	}
 	return errors.New("topic not found")
 }
+
+func (tr *TopicRepo) GetSorted() ([]Topic, error){
+	topics := tr.Topics
+	sort.Slice(topics, func(i, j int) bool {
+		return topics[i].Votes > topics[j].Votes
+	})
+	return topics, nil
+}
+
 
