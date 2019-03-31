@@ -58,11 +58,16 @@ func (th *TopicHandler) Upvote(tr *TopicRepo) gin.HandlerFunc {
 			return
 		}
 
-		tr.Upvote(body.Id)
-
+		if err := tr.Upvote(body.Id); err != nil {
+			c.JSON(http.StatusNotFound, gin.H {
+				"error" : "upvote fail", 
+			})
+			return
+		} 
+	
 		c.JSON(http.StatusOK, gin.H {
 			"message": "topic upvote success",
-		})
+		})	
 	}
 }
 
@@ -74,8 +79,13 @@ func (th *TopicHandler) Downvote(tr *TopicRepo) gin.HandlerFunc {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
-	
-		tr.Downvote(body.Id)
+
+		if err := tr.Downvote(body.Id); err != nil {
+			c.JSON(http.StatusNotFound, gin.H {
+				"error" : "downvote fail", 
+			})
+			return
+		} 
 	
 		c.JSON(http.StatusOK, gin.H {
 			"message": "topic downvote success",

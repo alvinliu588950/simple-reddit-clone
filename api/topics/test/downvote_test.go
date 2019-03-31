@@ -41,8 +41,9 @@ func TestDownvoteRoute(t *testing.T) {
 	err := json.Unmarshal([]byte(w.Body.String()), &response)
 
 	// assertions on the correctness of the response.
+	topic, _ := topicRepo.Find(id)
 	assert.Nil(t, err)
 	assert.Equal(t, 200, w.Code)
 	assert.Equal(t, "topic downvote success", response.Message)
-	assert.Equal(t, votes - 1, topicRepo.Find(id).Votes)
+	assert.Equal(t, votes - 1, topic.Votes)
 }
