@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import '../css/Topics.css'
 
 class Topics extends Component {
     constructor(props) {
@@ -11,6 +12,8 @@ class Topics extends Component {
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.addTopics = this.addTopics.bind(this);
+        this.upvote = this.upvote.bind(this);        
+        this.downvote = this.downvote.bind(this);
     }
     handleInputChange(event) {
         const target = event.target;
@@ -25,9 +28,6 @@ class Topics extends Component {
         this.fetchTopics()
     }
     render() {
-        var cardStyle = {
-            marginBottom: '10px'
-        }
         return (
             <div>
                 <div className="columns">
@@ -56,7 +56,7 @@ class Topics extends Component {
                                     <button 
                                         className="button is-link" 
                                         type="button"
-                                        onClick={this.addTopics}
+                                        onClick={() => this.addTopics()}
                                         >Add
                                     </button>
                                 </div>
@@ -68,9 +68,20 @@ class Topics extends Component {
                     <div className="column is-6 is-offset-3">
                         {
                             this.state.topics.map((item, index) => (
-                                <div className="card" key={index} style={cardStyle}>
+                                <div className="card" key={index}>
+                                    <div className="vote">
+                                        <button  onClick={() => this.upvote(item.Id)}>
+                                            <i className="fas fa-arrow-up"></i>
+                                        </button>
+                                        <p>{item.Votes}</p>
+                                        <button onClick={() => this.downvote(item.Id)}>
+                                            <i className="fas fa-arrow-down" ></i>
+                                        </button>                                    
+                                    </div>
                                     <div className="card-content">
-                                        <p>{item.Content}</p>
+                                        <div className="content">
+                                            <p>{item.Content}</p>
+                                        </div>
                                     </div>
                                 </div>
                             ))
@@ -106,8 +117,40 @@ class Topics extends Component {
             self.fetchTopics()
         })
         .catch((err) => {
-            console.log(err);
+            alert('Something went wrong.Please check your network or contact us.')
         })      
+    }
+    upvote(id) {
+        var self = this;
+        axios({
+            method: 'patch',
+            url: '/api/v1/topics/upvote',
+            data: {
+                id: id
+            }
+        })
+        .then((resp) => {
+            self.fetchTopics()
+        })
+        .catch((err) => {
+            alert('Something went wrong.Please check your network or contact us.')
+        })     
+    }
+    downvote(id) {
+        var self = this;
+        axios({
+            method: 'patch',
+            url: '/api/v1/topics/downvote',
+            data: {
+                id: id
+            }
+        })
+        .then((resp) => {
+            self.fetchTopics()
+        })
+        .catch((err) => {
+            alert('Something went wrong.Please check your network or contact us.')
+        })     
     }
 }
 
