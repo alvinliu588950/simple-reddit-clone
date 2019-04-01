@@ -41,6 +41,7 @@ func (th *TopicHandler) List(tr *TopicRepo) gin.HandlerFunc {
 }
 
 func (th *TopicHandler) Add(tr *TopicRepo) gin.HandlerFunc {
+	
 	return func (c *gin.Context) {
 		var body AddRequest
 
