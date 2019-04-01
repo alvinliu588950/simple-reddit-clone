@@ -1,3 +1,4 @@
+# Wirtten by the author AlvinLiu.
 swagger: "2.0"
 info:
   description: "simple-reddit-clone api document"
