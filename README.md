@@ -11,6 +11,7 @@ This is a simple web application which clone the reddit upvote and downvote feat
   * votes can be negative.
 *  Always display a list of top 20 topics (sorted by upvotes, descending) on the homepage.
   * If user upvote or downvote topics,the homepage will refresh immediately to display the correct order of topics.
+* Multiple users vote on the same topic concurrently may happen.
 ## Dependencies
 ### Backend:
 
