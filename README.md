@@ -41,6 +41,7 @@ This is a simple web application which clone the reddit upvote and downvote feat
 
 ### Api documentation:
 * swagger: 2.0
+* swagger-ui
 ## Usage
 
 The commands for daily usage are all wrapped up in the Makefile.Use `make` to run the script.
