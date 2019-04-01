@@ -1,0 +1,165 @@
+swagger: "2.0"
+info:
+  description: "simple-reddit-clone api document"
+  version: "1.0.0"
+  title: "Simple-reddit-clone"
+host: "localhost:8080"
+basePath: "/api/v1"
+tags:
+- name: "topics"
+  description: "Topics api"
+schemes:
+- "http"
+paths:
+  /topics:
+    get:
+      tags:
+      - "topics"
+      summary: "Return topics order by votes (limit 20 topics)"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: successful operation
+          schema:
+            type: object
+            properties:
+              topics:
+                type: array
+                items:
+                  $ref: '#/definitions/Topic'
+                example: [
+                  {
+                    Id: 1,
+                    Content: "test topic",
+                    Votes: 5,
+                  },
+                  {
+                    Id: 0,
+                    Content: "another test",
+                    Votes: 3,
+                  },                  
+                  {
+                    Id: 2,
+                    Content: "topic content here",
+                    Votes: 0,
+                  },
+                ]
+  /topics/add:
+    post:
+      tags:
+      - "topics"
+      summary: "Add new topic"
+      consumes:
+        - application/json
+      parameters:
+        - in: body     
+          name: 'content'
+          description: topic content
+          required: true
+          schema:
+            type: 'object'
+            properties:
+              content:
+                type: string
+                example: 'topic content'
+      responses:
+        200:
+          description: add topic success
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "topic add success"
+                
+  /topics/upvote:
+    patch:
+      tags:
+      - "topics"
+      summary: "upvote topic by Id"
+      consumes:
+        - application/json
+      parameters:
+        - in: body     
+          name: 'id'
+          description: topic Id
+          required: true
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int64
+                example: 0
+      responses:
+        200:
+          description: upvote topic success
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "topic upvote success"
+        404:
+          description: upvote topic fail
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "upvote fail"
+
+  /topics/downvote:
+    patch:
+      tags:
+      - "topics"
+      summary: "downvote topic by Id"
+      consumes:
+        - application/json
+      parameters:
+        - in: body     
+          name: 'id'
+          description: topic Id
+          required: true
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int64
+                example: 0
+      responses:
+        200:
+          description: upvote topic success
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "topic downvote success"
+        404:
+          description: upvote topic fail
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "downvote fail"
+
+
+                  
+definitions:
+  Topic:
+    type: "object"
+    properties:
+      Id:
+        type: "integer"
+        format: "int64"
+      Content:
+        type: "string"
+      Votes:
+        type: "string"
+    xml:
+      name: "Topic"

@@ -9,7 +9,11 @@ import (
 func main() {
 	r := gin.Default()
 
+	// serve frontend
 	r.Use(static.Serve("/", static.LocalFile("./client/build", true)))
+	// serve swagger
+	r.Use(static.Serve("/swagger", static.LocalFile("./swagger", true)))
+
 	// in-memory storage
 	topicRepo := topics.NewRepo()
 
