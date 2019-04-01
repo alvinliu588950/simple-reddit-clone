@@ -24,8 +24,12 @@ func NewRepo() *TopicRepo {
 	}
 }
 
-func (tr *TopicRepo) Add(t Topic) {
+func (tr *TopicRepo) Add(t Topic) (error) {
+	if len(t.Content) > 255 {
+		return errors.New("Topic content should not execeed 255 characters")
+	}
 	tr.Topics = append(tr.Topics, t)
+	return nil
 }
 
 func (tr *TopicRepo) Find(id int) (*Topic, error) {

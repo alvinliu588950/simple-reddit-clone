@@ -49,11 +49,14 @@ func (th *TopicHandler) Add(tr *TopicRepo) gin.HandlerFunc {
 			return
 		}
 
-		tr.Add(Topic{ 
+		if err := tr.Add(Topic{ 
 			Id: len(tr.Topics),
 			Content: body.Content,
 			Votes: 0,
-		})
+		}); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return			
+		}
 
 		c.JSON(http.StatusOK, gin.H {
 			"message": "topic add success",

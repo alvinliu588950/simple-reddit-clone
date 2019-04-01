@@ -119,6 +119,9 @@ class Topics extends Component {
                 });
             })
             .catch((err) => {
+                self.setState({ 
+                    isLoading: false
+                });     
                 alert('Something went wrong.Please check your network or contact us.')
             })
     }
@@ -138,7 +141,14 @@ class Topics extends Component {
             self.fetchTopics()
         })
         .catch((err) => {
-            alert('Something went wrong.Please check your network or contact us.')
+            self.setState({ 
+                isLoading: false
+            });     
+            if (err.response.status === 400) {
+                alert(err.response.data.error)
+            } else {
+                alert('Something went wrong.Please check your network or contact us.')            
+            }   
         })      
     }
     upvote(id) {
@@ -158,7 +168,11 @@ class Topics extends Component {
             self.fetchTopics()
         })
         .catch((err) => {
+            self.setState({ 
+                isLoading: false
+            });     
             alert('Something went wrong.Please check your network or contact us.')
+            
         })     
     }
     downvote(id) {
@@ -178,6 +192,9 @@ class Topics extends Component {
             self.fetchTopics()
         })
         .catch((err) => {
+            self.setState({ 
+                isLoading: false
+            });     
             alert('Something went wrong.Please check your network or contact us.')
         })     
     }
