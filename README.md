@@ -2,7 +2,7 @@
 This is a simple web application which clone the reddit upvote and downvote feature.
 
 ## Demo
-[Demo website]()
+[Demo website](https://simple-reddit-clone.herokuapp.com/)
 
 ## Implements and Assumptions
 * User can submit one or more topics.
